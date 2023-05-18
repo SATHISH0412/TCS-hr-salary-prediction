@@ -1,0 +1,29 @@
+import numpy as np
+import pandas as pd
+from flask import Flask, request, render_template
+import pickle
+import os
+print(os.getcwd())  # Print current working directory
+print(os.listdir())  # Print a list of files in the current working directory
+
+app=Flask(__name__)
+model=pickle.load(open('hr.pkl','rb'))
+@app.route('/')
+def home():
+    return render_template('home.html')
+@app.route('/Prediction',methods=['POST','GET'])
+def prediction():
+    return render_template('index.html')
+@app.route('/Home',methods=['POST','GET'])
+def my_home():
+    return render_template('home.html')
+
+@app.route('/predict',methods=['POST'])
+def predict():
+    features_name=['age','experience']
+    df=pd.DataFrame(predict, columns=features_name)
+    output=model.predict(df)
+    return render_template('result.html',prediction_text=output)
+
+if __name__=='__main__':
+    app.run(debug=False)
