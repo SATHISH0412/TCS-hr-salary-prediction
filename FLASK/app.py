@@ -19,8 +19,7 @@ def my_home():
     return render_template('home.html')
 
 @app.route('/predict',methods=['POST'])
-def predict():
-    def submit():
+ def submit():
     age = request.form['age']
     experience = request.form['experience']
     variables = [[int(age), int(experience)]]
