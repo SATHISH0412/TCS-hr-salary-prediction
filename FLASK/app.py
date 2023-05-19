@@ -20,10 +20,15 @@ def my_home():
 
 @app.route('/predict',methods=['POST'])
 def predict():
-    features_name=['age','experience']
-    df=pd.DataFrame(predict, columns=features_name)
-    output=model.predict(df)
-    return render_template('result.html',prediction_text=output)
+    def submit():
+    age = request.form['age']
+    experience = request.form['experience']
+    variables = [[int(age), int(experience)]]
+    result = model.predict(variables)
+    fin = int(result)
+
+    return render_template('result.html', salary=fin)
+
 
 if __name__=='__main__':
     app.run(debug=False)
